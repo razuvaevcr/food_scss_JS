@@ -92,3 +92,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setClock('.timer', deadline);
 });
+
