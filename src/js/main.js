@@ -239,10 +239,6 @@ window.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMassage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-
-            request.setRequestHeader('Content-type', 'apoplication/json');
             const formData = new FormData(form);
 
             const obj = {};
@@ -251,24 +247,25 @@ window.addEventListener('DOMContentLoaded', () => {
                 obj[key] = value;
             });
 
-            const json = JSON.stringify(obj);
-
-            request.send(json);
-
-            request.addEventListener('load', () => {
-                if (request.status == 200) {
-                    showThanksModal(massage.success);
-                    form.reset();
-
-                    console.log(request.response);
-
-                    statusMassage.remove();
-                } else {
-                    showThanksModal(massage.failure);
-                    console.log(statusMassage);
-                }
+            fetch('server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'apoplication/json'
+                },
+                body: JSON.stringify(obj)
+            })
+            .then(data => data.text())
+            .then(data => {
+                showThanksModal(massage.success);
+                console.log(data);
+                statusMassage.remove();
+            })
+            .catch(() => {
+                showThanksModal(massage.failure);
+            })
+            .finally(() => {
+                form.reset();
             });
-
         });
     }
 
