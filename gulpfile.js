@@ -1,6 +1,6 @@
 const gulp = require("gulp");
 const webpack = require("webpack-stream");
-const sass = require("gulp-sass");
+const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
@@ -16,6 +16,12 @@ gulp.task("copy-html", () => {
 
 gulp.task("copy-php", () => {
   return gulp.src("./src/*.php")
+              .pipe(gulp.dest(dist))
+              .pipe(browsersync.stream());
+});
+
+gulp.task("copy-db", () => {
+  return gulp.src("./src/*.json")
               .pipe(gulp.dest(dist))
               .pipe(browsersync.stream());
 });
@@ -81,9 +87,10 @@ gulp.task("watch", () => {
     gulp.watch("./src/scss/**/*.scss", gulp.parallel("build-sass"));
     gulp.watch("./src/js/**/*.js", gulp.parallel("build-js"));
     gulp.watch("./src/*.php", gulp.parallel("copy-php"));
+    gulp.watch("./src/*.json", gulp.parallel("copy-db"));
 });
 
-gulp.task("build", gulp.parallel("copy-html", "copy-assets", "build-sass", "build-js", "copy-php"));
+gulp.task("build", gulp.parallel("copy-html", "copy-assets", "build-sass", "build-js", "copy-php", "copy-db"));
 
 gulp.task("prod", () => {
     gulp.src("./src/index.html")
@@ -93,6 +100,8 @@ gulp.task("prod", () => {
     gulp.src("./src/icons/**/*.*")
         .pipe(gulp.dest(dist + "/icons"));
     gulp.src("./src/*.php")
+        .pipe(gulp.dest(dist));
+    gulp.src("./src/*.json")
         .pipe(gulp.dest(dist));
 
     gulp.src("./src/js/main.js")

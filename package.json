@@ -14,17 +14,20 @@
     "last 2 ios versions"
   ],
   "devDependencies": {
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.16.12",
     "@babel/preset-env": "^7.7.1",
-    "autoprefixer": "^9.7.1",
+    "autoprefixer": "^10.4.2",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
+    "core-js": "^3.20.3",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "json-server": "^0.17.0",
+    "sass": "^1.49.0",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^4.9.2",
     "webpack-stream": "^5.2.1"
   }
 }
